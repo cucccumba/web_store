@@ -1,10 +1,10 @@
-package com.example.web_store.Model;
+package com.example.web_store.model;
 
 
 public class Good {
     private String name;
-    private String price;
-    private String id;
+    private Double price;
+    private Integer id;
 
     public String getName() {
         return name;
@@ -14,19 +14,19 @@ public class Good {
         this.name = name;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

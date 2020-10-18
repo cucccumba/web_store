@@ -1,10 +1,16 @@
-package com.example.web_store.Model;
+package com.example.web_store.model;
 
 public class User {
-    private String email;
+    private Integer id;
     private String password;
     private String name;
 
+    public User(){}
+    public User(Integer id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
     public String getPassword() {
         return password;
     }
@@ -13,12 +19,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -32,7 +38,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 '}';
