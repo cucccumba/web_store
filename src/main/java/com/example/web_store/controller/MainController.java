@@ -2,9 +2,10 @@ package com.example.web_store.controller;
 
 import com.example.web_store.model.CreateGood;
 import com.example.web_store.model.Good;
+import com.example.web_store.model.LogData;
 import com.example.web_store.model.User;
-import com.example.web_store.service.GoodsDB;
-import com.example.web_store.service.UsersDB;
+import com.example.web_store.service.IGoodService;
+import com.example.web_store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,55 +13,55 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
     @Autowired
-    private UsersDB usersDB;
+    private IUserService userService;
     @Autowired
-    private GoodsDB goodsDB;
+    private IGoodService goodService;
 
     @GetMapping("/count/users")
     @ResponseBody
-    public String countUsers(){
-        return String.valueOf(usersDB.getSize());
+    public String countUsers() {
+        return String.valueOf(userService.getAllUsers().size());
     }
 
     @GetMapping("/count/goods")
     @ResponseBody
-    public String countGoods(){
-        return String.valueOf(goodsDB.getSize());
+    public String countGoods() {
+        return String.valueOf(goodService.getAllGoods().size());
     }
-/*
+
     @PostMapping("/create/user")
     @ResponseBody
-    public String createUser(@RequestBody User user) {
-        users.add(user);
-        return user.toString();
-    }*/
+    public String createUser(@RequestBody LogData logData) {
+        User user = userService.createUser(logData);
+        return Optional.ofNullable(user)
+                .map(User::toString)
+                .orElse("Can't create user");
+    }
 
     @PostMapping("/create/good")
     @ResponseBody
     public String createGood(@RequestBody CreateGood createGood) {
-        Good good = new Good();
-        good.setName(createGood.getName());
-        good.setPrice(createGood.getPrice());
-        return goodsDB.createObject(good).toString();
+        Good good = goodService.createGood(createGood);
+        return Optional.ofNullable(good)
+                .map(Good::toString)
+                .orElse("Can't create good");
     }
 
     @GetMapping("/show/users")
     @ResponseBody
     public String getAllUsers() {
-        List<User> users = usersDB.getContent();
-        return users.toString();
+
+        return userService.getAllUsers().toString();
     }
 
     @GetMapping("/show/goods")
     @ResponseBody
     public String getAllGoods() {
-        List<Good> goods = goodsDB.getContent();
-        return goods.toString();
+        return goodService.getAllGoods().toString();
     }
 }

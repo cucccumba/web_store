@@ -1,10 +1,15 @@
 package com.example.web_store.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "goods")
 public class Good {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
     private Double price;
-    private Integer id;
 
     public String getName() {
         return name;
